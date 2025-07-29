@@ -83,7 +83,8 @@ export default {
       
       // Prepare options (correct answer + 3 random wrong answers)
       this.options = [this.currentAnswer];
-      while (this.options.length < 4) {
+      const numAnswers = (this.words.length > 4) ? 4 : this.words.length;
+      while (this.options.length < numAnswers) {
         const randomWord = this.words[Math.floor(Math.random() * this.words.length)];
         const randomOption = this.currentQuestion === randomWord.english ? randomWord.german : randomWord.english;
         if (!this.options.includes(randomOption)) {
