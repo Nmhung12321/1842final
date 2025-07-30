@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const Vocab = mongoose.model('Vocab');
 
-exports.list_all_words = async function (req, res) {
+exports.list_all_words = async (req, res) => {
     try {
-        const words = await Vocab.find({});
+        const words = await Vocab.find({}).populate('category');
         res.json(words);
     } catch (err) {
         res.status(500).send(err);
@@ -22,7 +22,7 @@ exports.create_a_word = async (req, res) => {
 
 exports.read_a_word = async (req, res) => {
     try {
-        const word = await Vocab.findById(req.params.id);
+        const word = await Vocab.findById(req.params.id).populate('category');
         if (!word) {
             return res.status(404).send({ message: 'Word not found' });
         }
