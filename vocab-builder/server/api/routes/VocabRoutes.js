@@ -1,4 +1,4 @@
-const vocabBuilder = require('../controller/vocabController');
+const vocabBuilder = require('../controller/VocabController');
 
 module.exports = app => {
   app

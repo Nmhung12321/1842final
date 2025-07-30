@@ -2,8 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+
 global.Vocab = require('./api/models/VocabModels');
-const routes = require('./api/routes/vocabRoutes');
+global.Category = require('./api/models/CategoryModel');
+
+const vocabRoutes = require('./api/routes/VocabRoutes');
+const categoryRoutes = require('./api/routes/CategoryRoutes');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/vocab-builder')
@@ -17,7 +21,9 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-routes(app);
+vocabRoutes(app);
+categoryRoutes(app);
+
 app.listen(port);
 app.use((req, res) => {
   res.status(404).send({ url: `${req.originalUrl} not found` });
