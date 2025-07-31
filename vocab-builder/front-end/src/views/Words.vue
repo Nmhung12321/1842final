@@ -2,7 +2,7 @@
   <div id="words-page" class="ui container">
     <div class="ui segment">
       <h1 class="ui blue center aligned header">Words</h1>
-      <suggest-search :words="words" @update="onSearchUpdate"></suggest-search>
+      <suggest-search :words="allWords" @update="onSearchUpdate"></suggest-search>
       <table v-if="words.length" id="words" class="ui celled blue inverted center aligned table">
         <thead>
           <tr>
@@ -66,11 +66,13 @@ export default {
   },
   data() {
     return {
+      allWords: [],
       words: []
     };
   },
   async mounted() {
-    this.words = await this.fetchAllWords();
+    this.allWords = await vocabApi.getWords();
+    this.words = [...this.allWords];
   },
   methods: {
     async onDestroy(id) {
@@ -83,13 +85,10 @@ export default {
     },
     async onSearchUpdate(filtered) {
       if (filtered === null) {
-        this.words = await this.fetchAllWords();
+        this.words = [...this.allWords];
       } else {
         this.words = filtered.length ? filtered : [];
       }
-    },
-    async fetchAllWords() {
-      return await vocabApi.getWords();
     }
   }
 };
