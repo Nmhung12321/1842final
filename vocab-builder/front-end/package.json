@@ -7,7 +7,6 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "@smartweb/vue-flash-message": "^0.6.10",
     "axios": "^1.11.0",
     "semantic-ui-css": "^2.5.0",
     "vue": "^2.6.14",
