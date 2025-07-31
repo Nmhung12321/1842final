@@ -1,6 +1,6 @@
 <template>
-  <div id="words-page" class="ui container">
-    <div class="ui segment">
+  <div class="ui container">
+    <div class="ui raised very padded segment">
       <h1 class="ui blue center aligned header">Words</h1>
       <suggest-search :words="allWords" @update="onSearchUpdate"></suggest-search>
       <table v-if="words.length" id="words" class="ui celled blue inverted center aligned table">
@@ -93,10 +93,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-#words-page {
-  margin-top: 1.8em;
-}
-
-</style>
