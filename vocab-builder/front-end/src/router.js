@@ -5,6 +5,7 @@ import New from './views/New.vue';
 import Show from './views/Show.vue';
 import Edit from './views/Edit.vue';
 import Test from './views/Test.vue';
+import Category from './views/Category.vue';
 
 Vue.use(Router);
 
@@ -23,7 +24,7 @@ export default new Router({
       component: Words
     },
     {
-      path: '/words/new',
+      path: '/new/words',
       name: 'new-word',
       component: New
     },
@@ -36,6 +37,16 @@ export default new Router({
       path: '/words/:id/edit',
       name: 'edit',
       component: Edit
+    },
+    {
+      path: '/categories',
+      name: 'categories',
+      component: Category
+    },
+    {
+      path: '/categories/:id',
+      name: 'category',
+      component: Category
     },
     {
       path: '/test',

@@ -1,27 +1,9 @@
 import axios from 'axios';
-import Vue from 'vue';
-import VueFlashMessage from 'vue-flash-message';
-import 'vue-flash-message/dist/vue-flash-message.min.css';
-
-Vue.use(VueFlashMessage, {
-  messageOptions: {
-    timeout: 3000,
-    pauseOnInteract: true
-  }
-});
-
-const vm = new Vue(); 
+import { handleError } from './helper';
 
 const baseURL = 'http://localhost:3000/words/';
 
-const handleError = fn => (...params) =>
-  fn(...params).catch(error => {
-    const status = error?.response?.status || 'Network error';
-    const message = error?.response?.statusText || error.message || 'Something went wrong';
-    vm.flash(`${status}: ${message}`, 'error');
-  });
-
-export const api = {
+export const vocabApi = {
   getWord: handleError(async id => {
     const res = await axios.get(baseURL + id);
     return res.data;
