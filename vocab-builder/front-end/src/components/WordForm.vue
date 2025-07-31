@@ -1,30 +1,59 @@
 <template>
-  <form action="#" @submit.prevent="onSubmit">
-    <p v-if="errorsPresent" class="error">Please fill out both fields!</p>
-
-    <div class="ui labeled input fluid">
-      <div class="ui label">
-        <i class="de flag"></i> German
-      </div>
-      <input type="text" placeholder="Enter word..." v-model="word.german" />
+  <div class="ui container">
+    <div v-if="errorsPresent.isError" class="ui error message">
+      <i class="close icon"></i>
+      <div class="header">Error</div>
+      <p>{{ errorsPresent.message }}</p>
     </div>
 
-    <div class="ui labeled input fluid">
-      <div class="ui label">
-        <i class="gb uk flag"></i> English
+    <form class="ui form" action="#" @submit.prevent="onSubmit">
+      <div class="field">
+        <div class="ui labeled input fluid">
+          <div class="ui green label">
+            <i class="de flag"></i> German
+          </div>
+          <input type="text" placeholder="Enter word..." v-model="localWord.german" id="german" />
+        </div>
       </div>
-      <input type="text" placeholder="Enter word..." v-model="word.english" />
-    </div>
-
-    <div class="ui labeled input fluid">
-      <div class="ui label">
-        <i class="vn flag"></i> Vietnamese
+      <div class="field">
+        <div class="ui labeled input fluid">
+          <div class="ui blue label">
+            <i class="gb flag"></i> English
+          </div>
+          <input type="text" placeholder="Enter word..." v-model="localWord.english" id="english" />
+        </div>
       </div>
-      <input type="text" placeholder="Enter word..." v-model="word.vietnamese" />
-    </div>
+      <div class="field">
+        <div class="ui labeled input fluid">
+          <div class="ui red label">
+            <i class="vn flag"></i> Vietnamese
+          </div>
+          <input type="text" placeholder="Enter word..." v-model="localWord.vietnamese" id="vietnamese" />
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui labeled input fluid">
+          <div class="ui purple label">
+            <i class="tags icon"></i> Category
+          </div>
+          <select class="ui dropdown" v-model="categoryId" id="category">
+            <option value="">unknown</option>
+            <option
+            v-for="(cat, index) in allCategories"
+            :key="index"
+            :value="cat._id"
+            >
+              {{ cat.name }}
+            </option>
+          </select>
+        </div>
+      </div>
 
-    <button class="positive ui button">Submit</button>
-  </form>
+      <div class="ui container button-container">
+        <button class="ui primary large button">Submit</button>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -38,30 +67,74 @@ export default {
         return {
           english: '',
           german: '',
-          vietnamese: ''
-        };
+          vietnamese: '',
+          category: null
+        }
       }
+    },
+    allCategories: {
+      type: Array,
+      required: true
     }
   },
   data() {
     return {
-      errorsPresent: false
-    };
+      localWord: { ...this.word },
+      errorsPresent: {
+        isError: false,
+        message: ''
+      }
+    }
+  },
+  watch: {
+    word: {
+      handler(newWord) {
+        this.localWord = { ...newWord };
+      },
+      immediate: true,
+      deep: true
+    }
+  },
+  computed: {
+    categoryId: {
+      get() {
+        return this.localWord.category?._id || '';
+      },
+      set(newVal) {
+        this.localWord.category = this.allCategories.find(cat => cat._id === newVal) || null;
+      }
+    }
   },
   methods: {
-    onSubmit: function() {
-        if (this.word.english === '' || this.word.german === '' || this.word.vietnamese === '') {
-            this.errorsPresent = true;
+    onSubmit() {
+      const { german, english, vietnamese } = this.localWord;
+
+      if (!german || !english || !vietnamese) {
+        this.errorsPresent.isError = true;
+
+        if (!german && !english && !vietnamese) {
+          this.errorsPresent.message = "Please fill out all fields";
         } else {
-            this.$emit('createOrUpdate', this.word);
+          const missing = [];
+          if (!german) missing.push("German");
+          if (!english) missing.push("English");
+          if (!vietnamese) missing.push("Vietnamese");
+          this.errorsPresent.message = `Please fill out ${missing.join(', ')} field!`;
         }
+        return;
+      }
+      this.$emit('createOrUpdate', this.localWord);
+      this.errorsPresent = {
+        isError: false,
+        message: ""
+      }
     }
   }
 };
 </script>
 
 <style scoped>
-.error {
-  color: red;
+.button-container {
+  justify-items: center;
 }
 </style>

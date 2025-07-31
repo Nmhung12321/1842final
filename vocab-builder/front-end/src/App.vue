@@ -56,7 +56,7 @@ input {
 }
 
 div.label {
-  width: 120px;
+  width: 130px;
 }
 
 div.input {

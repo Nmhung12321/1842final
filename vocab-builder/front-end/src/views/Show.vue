@@ -23,7 +23,7 @@
       </div>
       <div class="field">
         <label for="category" class="ui brown label">
-          Category
+          <i class="tags icon"></i> Category
         </label>
         <input type="text" class="" readonly="" :value="word.category?.name || 'unknown'" id="category" />
       </div>
