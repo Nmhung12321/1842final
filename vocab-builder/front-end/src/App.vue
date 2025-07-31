@@ -1,22 +1,8 @@
 <template>
   <div id="app">
-    <!-- Navbar -->
-    <div class="ui inverted segment navbar">
-      <div class="ui center aligned container">
-        <div class="ui large secondary inverted pointing menu compact">
-          <router-link to="/words" exact class="item">
-            <i class="comment outline icon"></i> Words
-          </router-link>
-          <router-link to="/words/new" class="item">
-            <i class="plus circle icon"></i> New
-          </router-link>
-          <router-link to="/test" class="item">
-            <i class="graduation cap icon"></i> Test
-          </router-link>
-        </div>
-      </div>
-    </div>
+    <Header></Header>
 
+    <!-- Main Content -->
     <div class="ui text container">
       <flash-message class="myFlash"></flash-message>
       <div class="ui one column grid">
@@ -25,18 +11,35 @@
         </div>
       </div>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
+import Footer from './components/Footer.vue';
+import Header from './components/Header.vue';
+
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    'Header': Header,
+    'Footer': Footer
+  }
 };
 </script>
 
 <style>
-#app > div.navbar {
-  margin-bottom: 1.5em;
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#app > div.ui.text.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .myFlash {
@@ -63,5 +66,13 @@ div.input {
 button.ui.button {
   margin-top: 15px;
   display: block;
+}
+
+h1.ui.header {
+  padding: 5px;
+  width: 30%;
+  margin-inline: auto;
+  border-bottom: 3px solid #7c3aed;
+  margin-bottom: 1em;
 }
 </style>
