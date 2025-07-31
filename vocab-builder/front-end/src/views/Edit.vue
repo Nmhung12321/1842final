@@ -17,7 +17,7 @@
 
 <script>
 import WordForm from '../components/WordForm.vue';
-import { api } from '../helpers/helpers';
+import { vocabApi } from '../helpers/vocabApi';
 
 export default {
   name: 'edit',
@@ -30,11 +30,11 @@ export default {
     };
   },
   async mounted() {
-    this.word = await api.getWord(this.$route.params.id);
+    this.word = await vocabApi.getWord(this.$route.params.id);
   },
   methods: {
     createOrUpdate: async function(word) {
-      await api.updateWord(word);
+      await vocabApi.updateWord(word);
       this.flash('Word updated successfully!', 'success');
       this.$router.push(`/words/${word._id}`);
     }

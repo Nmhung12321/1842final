@@ -13,7 +13,7 @@
 
 <script>
 import WordForm from '../components/WordForm.vue';
-import { api } from '../helpers/helpers';
+import { vocabApi } from '../helpers/vocabApi';
 
 export default {
   name: 'new-word',
@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     createOrUpdate: async function(word) {
-      const res = await api.createWord(word);
+      const res = await vocabApi.createWord(word);
       this.flash('Word created successfully!', 'success');
       this.$router.push(`/words/${res._id}`);
     }

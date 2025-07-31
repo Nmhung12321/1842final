@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { api } from '../helpers/helpers';
+import { vocabApi } from '../helpers/vocabApi';
 
 export default {
   name: 'vocabulary-test',
@@ -57,7 +57,7 @@ export default {
     };
   },
   async mounted() {
-    this.words = await api.getWords();
+    this.words = await vocabApi.getWords();
   },
   methods: {
     startTest() {
