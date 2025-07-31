@@ -50,7 +50,7 @@
       </div>
 
       <div class="ui container button-container">
-        <button class="ui primary large button">Submit</button>
+        <button class="ui primary large button">{{ submitText }}</button>
       </div>
     </form>
   </div>
@@ -75,6 +75,10 @@ export default {
     allCategories: {
       type: Array,
       required: true
+    },
+    submitText: {
+      type: String,
+      default: 'Submit'
     }
   },
   data() {

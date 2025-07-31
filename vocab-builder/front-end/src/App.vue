@@ -70,7 +70,7 @@ button.ui.button {
 
 h1.ui.header {
   padding: 5px;
-  width: 30%;
+  width: 40%;
   margin-inline: auto;
   border-bottom: 3px solid #7c3aed;
   margin-bottom: 1em;
