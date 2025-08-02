@@ -8,8 +8,9 @@ export const vocabApi = {
     const res = await axios.get(baseURL + id);
     return res.data;
   }),
-  getWords: handleError(async () => {
-    const res = await axios.get(baseURL);
+  getWords: handleError(async (categoryId = null) => {
+    const config = categoryId ? { params: { category: categoryId } } : {};
+    const res = await axios.get(baseURL, config);
     return res.data;
   }),
   deleteWord: handleError(async id => {

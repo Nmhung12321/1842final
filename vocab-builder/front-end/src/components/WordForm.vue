@@ -49,7 +49,7 @@
         </div>
       </div>
 
-      <div class="ui container button-container">
+      <div class="ui container center aligned">
         <button class="ui primary large button">{{ submitText }}</button>
       </div>
     </form>
@@ -136,9 +136,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.button-container {
-  justify-items: center;
-}
-</style>

@@ -63,11 +63,6 @@ div.input {
   margin-bottom: 10px;
 }
 
-button.ui.button {
-  margin-top: 15px;
-  display: block;
-}
-
 h1.ui.header {
   padding: 5px;
   width: 40%;
