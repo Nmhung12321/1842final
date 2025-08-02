@@ -4,8 +4,11 @@
       <h1 class="ui purple header">Vocabulary Test</h1>
       <p class="ui header">Test your vocabulary knowledge</p>
     </div>
+    <div v-if="words.length < 2" class="ui segment center aligned">
+      <p class="ui red header">Not enough words to create a test.</p>
+    </div>
     
-    <div class="ui segment">
+    <div v-else class="ui segment">
       <test-settings 
       v-if="!testStarted"
       @start="startTest"
@@ -54,7 +57,8 @@ export default {
   },
   async mounted() {
     this.words = await vocabApi.getWords();
-    this.categories = await categoryApi.getCategoriesWithWords();
+    const allCategories = await categoryApi.getCategories();
+    this.categories = allCategories.filter(cat => cat.words.length > 1);
   },
   methods: {
     async startTest(config) {
