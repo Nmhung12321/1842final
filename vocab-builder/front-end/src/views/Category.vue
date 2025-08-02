@@ -48,13 +48,12 @@
             </div>
           </div>
         </h3>
-        <div v-if="editMode" class="ui fluid input">
-          <input id="edit" v-model="editName" placeholder="typing category name ..." />
-          <div class="ui tiny buttons">
-            <button class="ui teal button" @click="handleEdit">Save</button>
-            <button class="ui button" @click="editMode = false">Cancel</button>
-          </div>
-        </div>
+        <category-input 
+        v-if="editMode"
+        :category="selected"
+        @createOrUpdate="handleEdit"
+        @cancel="onCancelEdit"
+        ></category-input>
 
         <word-table
           :words="wordsByCategory"
@@ -66,6 +65,7 @@
 </template>
 
 <script>
+import CategoryInput from '@/components/CategoryInput.vue';
 import SuggestSearch from '@/components/SuggestSearch.vue';
 import WordTable from '@/components/WordTable.vue';
 import { categoryApi } from '@/helpers/categoryApi';
@@ -75,7 +75,8 @@ export default {
   name: 'category',
   components: {
     'suggest-search': SuggestSearch,
-    'word-table': WordTable
+    'word-table': WordTable,
+    'category-input': CategoryInput
   },
   data() {
     return {
@@ -83,8 +84,7 @@ export default {
       words: [],
       categories: [],
       selected: null,
-      editMode: false,
-      editName: ''
+      editMode: false
     }
   },
   async mounted() {
@@ -97,15 +97,13 @@ export default {
       this.selected = this.allCategories.find(cat => cat._id === id);
       if (this.$route.path.endsWith('/edit')) {
         this.editMode = true;
-        this.editName = this.selected.name;
       }
     }
   },
   watch: {
     selected(newVal, oldVal) {
-      if (newVal?._id !== oldVal._id) {
+      if (newVal?._id !== oldVal?._id) {
         this.editMode = false;
-        this.editName = '';
       }
     }
   },
@@ -137,24 +135,22 @@ export default {
       }
     },
     onEdit(cat) {
-      this.$router.push(`/categories/${cat._id}/edit`);
-      this.editMode = true;
-      this.editName = this.selected.name;
+      this.editMode = !(this.editMode && this.selected?._id === cat._id);
+      const path = this.editMode ?  `/categories/${cat._id}/edit` : `/categories/${cat._id}`;
+      this.$router.push(path);
     },
-    async handleEdit() {
-      const updated = await categoryApi.updateCategory({
-        _id: this.selected._id, 
-        name: this.editName.trim() 
-      });
+    async handleEdit(category) {
+      const updated = await categoryApi.updateCategory(category);
       this.flash('Category updated', 'success');
 
-      this.selected.name = updated.name;
+      this.selected = updated;
       this.editMode = false;
-      this.editName = '';
       const path = `/categories/${this.selected._id}`;
-      if (this.$route.path !== path) {
-        this.$router.push(path);
-      }
+      this.$router.push(path);
+    },
+    onCancelEdit() {
+      this.editMode = false;
+      this.$router.push(`/categories/${this.selected?._id || ''}`);
     },
     async onDeleteCategory(id) {
       if (!confirm('Are you sure you want to delete this category?')) return;
@@ -162,6 +158,7 @@ export default {
       this.flash('Category deleted successfully!', 'success');
       this.categories = this.categories.filter(cat => cat._id !== id);
       this.selected = null;
+      this.$router.push({ name: 'categories' });
     },
     async onDestroyWord(id) {
       await vocabApi.deleteWord(id);
