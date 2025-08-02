@@ -16,7 +16,7 @@
           <td>{{ word.vietnamese }}</td>
           <td class="collapsing">
             <router-link
-              :to="{ name: 'show', params: { id: word._id } }"
+              :to="{ name: 'show-word', params: { id: word._id } }"
               class="ui green button compact circular"
               title="View details"
             >
@@ -25,7 +25,7 @@
           </td>
           <td class="collapsing">
             <router-link
-              :to="{ name: 'edit', params: { id: word._id } }"
+              :to="{ name: 'edit-word', params: { id: word._id } }"
               class="ui yellow button compact circular"
               title="Edit"
             >

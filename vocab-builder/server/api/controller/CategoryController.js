@@ -23,6 +23,19 @@ exports.list_all_categories = async (req, res) => {
 
 exports.create_a_category = async (req, res) => {
     try {
+        if (req.body.name) {
+            req.body.name = req.body.name.trim().toLowerCase();
+        }
+        const existing = await Category.findOne({
+            name: req.body.name
+        });
+        if (existing) {
+            return res.json({
+                message: 'This category already exists.',
+                exists: true
+            });
+        }
+
         const newCategory = new Category(req.body);
         const category = await newCategory.save();
         res.json(category);

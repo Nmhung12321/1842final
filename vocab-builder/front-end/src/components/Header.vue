@@ -58,7 +58,7 @@ export default {
         },
         {
           name: 'New',
-          to: '/new/words',
+          to: '/new',
           icon: 'plus circle'
         },
         {

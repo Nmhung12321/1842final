@@ -38,7 +38,7 @@
         <i class="chevron circle left icon"></i> Go Back
       </button>
       <router-link 
-      :to="{ name: 'edit', params: { id: this.$route.params.id }}" 
+      :to="{ name: 'edit-word', params: { id: this.$route.params.id }}" 
       class="ui large blue inverted button"
       title="Edit the word"
       >

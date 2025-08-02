@@ -24,18 +24,18 @@ export default new Router({
       component: Words
     },
     {
-      path: '/new/words',
+      path: '/new/word',
       name: 'new-word',
       component: New
     },
     {
       path: '/words/:id',
-      name: 'show',
+      name: 'show-word',
       component: Show
     },
     {
       path: '/words/:id/edit',
-      name: 'edit',
+      name: 'edit-word',
       component: Edit
     },
     {
@@ -52,6 +52,16 @@ export default new Router({
       path: '/categories/:id/edit',
       name: 'edit-category',
       component: Category
+    },
+    {
+      path: '/new/category',
+      name: 'new-category',
+      component: New
+    },
+    {
+      path: '/new',
+      name: 'new-view',
+      component: New
     },
     {
       path: '/test',
