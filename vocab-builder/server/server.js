@@ -14,7 +14,6 @@ mongoose.connect('mongodb://localhost/vocab-builder')
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log('MongoDB failed: ', err));
 
-
 const port = process.env.PORT || 3000;
 const app = express();
 app.use(cors());
