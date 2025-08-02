@@ -5,10 +5,6 @@ module.exports = app => {
     .route('/categories')
     .get(categoryBuilder.list_all_categories)
     .post(categoryBuilder.create_a_category);
-  
-  app
-    .route('/categories/words')
-    .get(categoryBuilder.get_all_categories_with_words);
 
   app
     .route('/categories/:id')

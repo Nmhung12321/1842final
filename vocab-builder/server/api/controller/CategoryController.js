@@ -5,26 +5,16 @@ const Vocab = mongoose.model('Vocab');
 exports.list_all_categories = async (req, res) => {
     try {
         const categories = await Category.find({});
-        res.json(categories);
-    } catch (err) {
-        res.status(500).send(err);
-    }
-}
-
-exports.get_all_categories_with_words = async (req, res) => {
-    try {
-        const categories = await Category.find({});
-
         const result = await Promise.all(
             categories.map(async (cat) => {
-                const words = await Vocab.find({ category: cat._id }).populate('category');
+                const words = await Vocab.find({ category: cat._id });
                 return {
                     _id: cat._id,
                     name: cat.name,
                     words,
-                };
+                }
             })
-        );
+        )
         res.json(result);
     } catch (err) {
         res.status(500).send(err);

@@ -12,10 +12,6 @@ export const categoryApi = {
     const res = await axios.get(baseURL);
     return res.data;
   }),
-  getCategoriesWithWords: handleError(async () => {
-    const res = await axios.get(baseURL + 'words');
-    return res.data;
-  }),
   deleteCategory: handleError(async id => {
     const res = await axios.delete(baseURL + id);
     return res.data;
