@@ -16,6 +16,23 @@ exports.list_all_words = async (req, res) => {
 
 exports.create_a_word = async (req, res) => {
     try {
+        ['english', 'german', 'vietnamese'].forEach(field => {
+            if (req.body[field]) {
+                req.body[field] = req.body[field].trim().toLowerCase();
+            }
+        });
+        const existing = await Vocab.findOne({
+            english: req.body.english,
+            german: req.body.german,
+            vietnamese: req.body.vietnamese
+        });
+        if (existing) {
+            return res.json({
+                message: 'This word already exists.',
+                exists: true
+            });
+        }
+
         const newWord = new Vocab(req.body);
         const word = await newWord.save();
         res.json(word);
