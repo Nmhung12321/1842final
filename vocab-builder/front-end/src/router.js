@@ -49,6 +49,11 @@ export default new Router({
       component: Category
     },
     {
+      path: '/categories/:id/edit',
+      name: 'edit-category',
+      component: Category
+    },
+    {
       path: '/test',
       name: 'test',
       component: Test

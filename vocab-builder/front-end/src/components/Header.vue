@@ -53,7 +53,7 @@ export default {
         },
         {
           name: 'Categories',
-          to: 'categories',
+          to: '/categories',
           icon: 'bookmark'
         },
         {
