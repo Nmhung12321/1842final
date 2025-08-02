@@ -30,6 +30,13 @@
     </div>
 
     <div class="ui center aligned segment basic">
+      <button
+      @click="goBack"
+      class="ui large green inverted button"
+      title="Go back words page"
+      >
+        <i class="chevron circle left icon"></i> Go Back
+      </button>
       <router-link 
       :to="{ name: 'edit', params: { id: this.$route.params.id }}" 
       class="ui large blue inverted button"
@@ -54,6 +61,11 @@ export default {
   async mounted() {
     const id = this.$route.params.id;
     this.word = await vocabApi.getWord(id);
+  },
+  methods: {
+    goBack() {
+      this.$router.push({ name: 'words' });
+    }
   }
 };
 </script>

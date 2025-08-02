@@ -50,6 +50,7 @@
       </div>
 
       <div class="ui container center aligned">
+        <button type="button" class="ui cancel large button" @click="onCancel">Cancel</button>
         <button class="ui primary large button">{{ submitText }}</button>
       </div>
     </form>
@@ -132,6 +133,9 @@ export default {
         isError: false,
         message: ""
       }
+    },
+    onCancel() {
+      this.$emit('cancel');
     }
   }
 };

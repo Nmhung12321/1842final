@@ -5,6 +5,7 @@
     <div class="ui raised very padded segment">
       <word-form 
         @createOrUpdate="createOrUpdate"
+        @cancel="goBack"
         :allCategories="categories"
         submitText="Create Word"
       ></word-form>
@@ -40,6 +41,9 @@ export default {
 
       this.flash('Word created successfully!', 'success');
       this.$router.push(`/words/${res._id}`);
+    },
+    goBack() {
+      this.$router.push('/words');
     }
   }
 };
