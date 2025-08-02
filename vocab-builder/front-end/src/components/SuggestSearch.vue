@@ -5,7 +5,7 @@
       @input="handleInput"
       id="search"
       type="text"
-      placeholder="Searching..."
+      :placeholder="placeholder"
       class="prompt"
     />
     <i class="search icon"></i>
@@ -16,15 +16,23 @@
 export default {
   name: "SuggestSearch",
   props: {
-    words: {
+    data: {
       type: Array,
       default: () => []
+    },
+    placeholder: {
+      type: String,
+      default: 'Searching ...'
+    },
+    searchFields: {
+      type: Array,
+      required: true
     }
   },
   data() {
     return {
       query: "",
-      suggestWords: [],
+      suggestList: [],
     };
   },
   watch: {
@@ -36,29 +44,20 @@ export default {
     handleInput() {
       const q = this.query.trim().toLowerCase();
       if (!q) {
-        this.suggestWords = [];
-        this.$emit("update", null);
+        this.suggestList = [];
+        this.$emit("search", null);
         return;
       }
 
-      this.suggestWords = this.words.filter((w) =>
-        [w.german, w.english, w.vietnamese].some(val =>
-          val.toLowerCase().includes(q)
+      this.suggestList = this.data.filter(item =>
+        this.searchFields.some(field =>
+          (item[field] || '').toLowerCase().includes(q)
         )
       );
       
-      this.$emit("update", this.suggestWords);
+      this.$emit("search", this.suggestList);
       
     },
-    selectWord(word) {
-      this.query = `${word.german} → ${word.english}`;
-      this.suggestWords = [word];
-      this.$emit("update", [word]);
-    },
-  },
-  mounted() {
-    console.log("Words received: ", this.words);
-    
   }
 };
 </script>
