@@ -3,7 +3,11 @@ const Vocab = mongoose.model('Vocab');
 
 exports.list_all_words = async (req, res) => {
     try {
-        const words = await Vocab.find({}).populate('category');
+        const filter = {};
+        if (req.query.category) {
+            filter.category = req.query.category;
+        }
+        const words = await Vocab.find(filter).populate('category');
         res.json(words);
     } catch (err) {
         res.status(500).send(err);
