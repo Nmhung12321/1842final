@@ -58,7 +58,3 @@ export default {
     },
 };
 </script>
-
-<style scoped>
-/* No custom CSS needed, using Semantic UI classes */
-</style>

@@ -48,7 +48,7 @@
     <div class="two fields">
       <div class="field">
         <label for="numWords">Number of Words: </label>
-        <input id="numWords" v-model="config.numWords" type="number" min="1" :max="maxWordsLocal" class="ui input" />
+        <input id="numWords" v-model="config.numWords" type="number" min="2" :max="maxWordsLocal" class="ui input" />
       </div>
       <div class="field">
         <label for="time">Time per word (seconds): </label>
