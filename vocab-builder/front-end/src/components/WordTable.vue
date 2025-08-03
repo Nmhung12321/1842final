@@ -1,6 +1,6 @@
 <template>
-  <div class="ui container">
-    <table v-if="words.length" id="words" class="ui celled blue inverted center aligned table">
+  <div class="scrollable">
+    <table v-if="words.length" id="words" class="ui unstackable celled blue inverted center aligned table">
       <thead>
         <tr>
           <th>English</th>
@@ -69,3 +69,10 @@ export default {
   }
 }
 </script>
+
+<style>
+.scrollable {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+</style>
